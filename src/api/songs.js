@@ -12,12 +12,16 @@ export async function fetchSongById(id) {
   return data
 }
 
+export async function deleteSong(id) {
+  const { error } = await supabase.from('songs').delete().eq('id', id)
+  if (error) throw error
+}
+
 export async function getVinylsBySong(songId) {
   const { data, error } = await supabase
     .from('vinyl_songs')
     .select('vinyls(*)')
     .eq('song_id', songId)
-
   if (error) throw error
   return data.map(r => r.vinyls)
 }

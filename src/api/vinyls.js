@@ -1,22 +1,40 @@
 import { supabase } from '../lib/supabaseClient'
 
+export async function fetchVinyls() {
+  const { data, error } = await supabase.from('vinyls').select('*')
+  if (error) throw error
+  return data
+}
+
 export async function fetchVinylById(id) {
   const { data, error } = await supabase.from('vinyls').select('*').eq('id', id).single()
   if (error) throw error
   return data
 }
 
-export async function fetchProviderVinyls(providerId) {
-  const { data, error } = await supabase
+export async function reduceInventory(vinylId) {
+  // Obtener inventario actual
+  const { data: vinyl } = await supabase
     .from('vinyls')
-    .select('*')
-    .eq('provider_id', providerId)
+    .select('inventory')
+    .eq('id', vinylId)
+    .single()
 
-  if (error) throw error
-  return data
+  if (!vinyl) return
+
+  if (vinyl.inventory <= 1) {
+    // Si queda 1, se elimina el vinilo
+    await supabase.from('vinyls').delete().eq('id', vinylId)
+  } else {
+    // De lo contrario, se descuenta uno
+    await supabase
+      .from('vinyls')
+      .update({ inventory: vinyl.inventory - 1 })
+      .eq('id', vinylId)
+  }
 }
 
-export async function createVinyl(vinyl, songIds = []) {
+export async function createVinyl(vinyl) {
   const { data, error } = await supabase
     .from('vinyls')
     .insert(vinyl)
@@ -24,17 +42,5 @@ export async function createVinyl(vinyl, songIds = []) {
     .single()
 
   if (error) throw error
-
-  if (songIds.length) {
-    const relations = songIds.map((sid, i) => ({
-      vinyl_id: data.id,
-      song_id: sid,
-      track_number: i + 1,
-    }))
-
-    const { error: relError } = await supabase.from('vinyl_songs').insert(relations)
-    if (relError) throw relError
-  }
-
   return data
 }
