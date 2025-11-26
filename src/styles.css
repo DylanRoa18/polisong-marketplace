@@ -22,7 +22,7 @@ a {
    NAVBAR
 ========================== */
 nav {
-  background: #1a3cff;
+  background: #662bd3;
   padding: 15px 25px;
   display: flex;
   gap: 20px;
@@ -47,6 +47,7 @@ nav a:hover {
   padding: 20px;
 }
 
+
 /* ==========================
    TARJETAS (Canciones / Vinilos)
 ========================== */
@@ -70,7 +71,7 @@ button {
   background: #1a3cff;
   color: white;
   padding: 10px 15px;
-  border-radius: 6px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   margin-top: 10px;
@@ -93,12 +94,13 @@ button:hover {
   background: #e9edff;
 }
 
+
 /* ==========================
    FORMULARIOS
 ========================== */
 form {
   background: white;
-  padding: 25px;
+  padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   max-width: 400px;
@@ -106,12 +108,15 @@ form {
 }
 
 input {
-  width: 100%;
+  width: 75%;
   padding: 12px;
   border: 2px solid #c7d3ff;
-  border-radius: 6px;
+  border-radius: 15px;
   margin-bottom: 12px;
+  font-size: 15px;
+  background: #ffffff;
 }
+
 
 input:focus {
   border-color: #1a3cff;
@@ -129,3 +134,13 @@ input:focus {
   border-radius: 4px;
   color: #00257a;
 }
+
+.form-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+

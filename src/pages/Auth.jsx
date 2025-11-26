@@ -81,8 +81,11 @@ export default function Auth() {
         onChange={e => setPassword(e.target.value)}
       />
 
-      <button type="button" onClick={signIn}>Iniciar sesión</button>
-      <button type="button" className="btn-secondary" onClick={signUp}>Crear cuenta</button>
+     <div className="form-buttons">
+  <button type="button" onClick={signIn}>Iniciar sesión</button>
+  <button type="button" className="btn-secondary" onClick={signUp}>Crear cuenta</button>
+     </div>
+
 
       {message && <p className="alert">{message}</p>}
     </form>

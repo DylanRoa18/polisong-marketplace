@@ -17,11 +17,12 @@ export async function createVinyl(vinyl) {
     .from('vinyls')
     .insert(vinyl)
     .select()
-    .single()
+    .single();
 
-  if (error) throw error
-  return data
+  if (error) throw error;
+  return data;
 }
+
 
 export async function fetchProviderVinyls(providerId) {
   const { data, error } = await supabase

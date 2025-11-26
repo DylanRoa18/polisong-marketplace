@@ -1,10 +1,9 @@
 import { supabase } from '../lib/supabaseClient'
-import { reduceInventory } from './vinyls'
 
+// 🟦 Crear Orden (ya lo tienes)
 export async function createOrder(buyerId, items, paymentMethod) {
   const total = items.reduce((acc, item) => acc + item.price * item.qty, 0)
 
-  // Crear orden
   const { data: order, error } = await supabase
     .from('orders')
     .insert({
@@ -18,7 +17,6 @@ export async function createOrder(buyerId, items, paymentMethod) {
 
   if (error) throw error
 
-  // Insertar ítems y procesar inventario
   for (let item of items) {
     await supabase.from('order_items').insert({
       order_id: order.id,
@@ -27,14 +25,43 @@ export async function createOrder(buyerId, items, paymentMethod) {
       price: item.price,
       qty: 1
     })
-
-    // 🔥 IMPORTANTE:
-    // - Canciones: NO se eliminan
-    // - Vinilos: sí se gestionan
-    if (item.vinyl_id) {
-      await reduceInventory(item.vinyl_id)
-    }
   }
 
   return order
+}
+
+// 🟦 Obtener compras del usuario
+export async function getUserOrders(userId) {
+  const { data, error } = await supabase
+    .from('orders')
+    .select(`
+      *,
+      order_items (
+        *,
+        songs (*),
+        vinyls (*)
+      )
+    `)
+    .eq('buyer_id', userId)
+    .order('created_at', { ascending: false })
+
+  if (error) throw error
+  return data
+}
+
+// 🟦 Obtener ventas del proveedor
+export async function getProviderSales(providerId) {
+  const { data, error } = await supabase
+    .from('order_items')
+    .select(`
+      *,
+      orders (*),
+      songs (*),
+      vinyls (*)
+    `)
+    .eq('vinyls.provider_id', providerId)
+    .order('created_at', { ascending: false })
+
+  if (error) throw error
+  return data
 }
