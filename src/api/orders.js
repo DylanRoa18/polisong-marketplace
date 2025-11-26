@@ -1,37 +1,36 @@
 import { supabase } from '../lib/supabaseClient'
-import { deleteSong } from './songs'
 import { reduceInventory } from './vinyls'
 
 export async function createOrder(buyerId, items, paymentMethod) {
   const total = items.reduce((acc, item) => acc + item.price * item.qty, 0)
 
+  // Crear orden
   const { data: order, error } = await supabase
     .from('orders')
     .insert({
       buyer_id: buyerId,
       payment_method: paymentMethod,
       total,
-      status: 'open'
+      status: 'completed'
     })
     .select()
     .single()
 
   if (error) throw error
 
-  // Insertar items
+  // Insertar ítems y procesar inventario
   for (let item of items) {
     await supabase.from('order_items').insert({
       order_id: order.id,
       song_id: item.song_id,
       vinyl_id: item.vinyl_id,
-      price: item.price
+      price: item.price,
+      qty: 1
     })
 
-    // LOGICA DE BORRADO / INVENTARIO
-    if (item.song_id) {
-      await deleteSong(item.song_id)
-    }
-
+    // 🔥 IMPORTANTE:
+    // - Canciones: NO se eliminan
+    // - Vinilos: sí se gestionan
     if (item.vinyl_id) {
       await reduceInventory(item.vinyl_id)
     }
