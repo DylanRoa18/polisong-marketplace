@@ -1,0 +1,131 @@
+/* ==========================
+   ESTILOS GENERALES
+========================== */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #f4f7ff;
+  color: #1a1a1a;
+}
+
+h1, h2, h3 {
+  color: #1a3cff;
+}
+
+a {
+  text-decoration: none;
+  color: #1a3cff;
+}
+
+/* ==========================
+   NAVBAR
+========================== */
+nav {
+  background: #1a3cff;
+  padding: 15px 25px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+nav a {
+  color: white;
+  font-weight: bold;
+}
+
+nav a:hover {
+  opacity: 0.8;
+}
+
+/* ==========================
+   CONTENEDORES
+========================== */
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* ==========================
+   TARJETAS (Canciones / Vinilos)
+========================== */
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+  transition: 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+/* ==========================
+   BOTONES
+========================== */
+button {
+  background: #1a3cff;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.1s;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #1634d1;
+}
+
+/* Botón secundario */
+.btn-secondary {
+  background: white;
+  color: #1a3cff;
+  border: 2px solid #1a3cff;
+}
+
+.btn-secondary:hover {
+  background: #e9edff;
+}
+
+/* ==========================
+   FORMULARIOS
+========================== */
+form {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  max-width: 400px;
+  margin: auto;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #c7d3ff;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+input:focus {
+  border-color: #1a3cff;
+  outline: none;
+}
+
+/* ==========================
+   ALERTAS
+========================== */
+.alert {
+  background: #e7f0ff;
+  border-left: 4px solid #1a3cff;
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 4px;
+  color: #00257a;
+}

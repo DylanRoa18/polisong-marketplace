@@ -36,19 +36,22 @@ export default function AddVinyl() {
     }
   }
 
-  return (
-    <div>
-      <h1>Agregar Vinilo</h1>
+return (
+  <div className="container">
+    <h1>Agregar Vinilo</h1>
 
+    <form>
       <input placeholder="Título" value={title} onChange={e => setTitle(e.target.value)} />
       <input placeholder="Artista" value={artist} onChange={e => setArtist(e.target.value)} />
       <input placeholder="Año" value={year} onChange={e => setYear(e.target.value)} />
       <input placeholder="Precio" value={price} onChange={e => setPrice(e.target.value)} />
       <input placeholder="Inventario" value={inventory} onChange={e => setInventory(e.target.value)} />
 
-      <button onClick={save}>Guardar</button>
+      <button type="button" onClick={save}>Guardar</button>
 
-      <p>{message}</p>
-    </div>
-  )
+      {message && <p className="alert">{message}</p>}
+    </form>
+  </div>
+)
+
 }

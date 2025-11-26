@@ -12,28 +12,6 @@ export async function fetchVinylById(id) {
   return data
 }
 
-export async function reduceInventory(vinylId) {
-  // Obtener inventario actual
-  const { data: vinyl } = await supabase
-    .from('vinyls')
-    .select('inventory')
-    .eq('id', vinylId)
-    .single()
-
-  if (!vinyl) return
-
-  if (vinyl.inventory <= 1) {
-    // Si queda 1, se elimina el vinilo
-    await supabase.from('vinyls').delete().eq('id', vinylId)
-  } else {
-    // De lo contrario, se descuenta uno
-    await supabase
-      .from('vinyls')
-      .update({ inventory: vinyl.inventory - 1 })
-      .eq('id', vinylId)
-  }
-}
-
 export async function createVinyl(vinyl) {
   const { data, error } = await supabase
     .from('vinyls')

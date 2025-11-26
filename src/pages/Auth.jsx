@@ -63,10 +63,11 @@ export default function Auth() {
   // -----------------------------
   // UI
   // -----------------------------
-  return (
-    <div>
-      <h2>Acceder</h2>
+ return (
+  <div className="container">
+    <h2>Acceder</h2>
 
+    <form>
       <input
         placeholder="Correo"
         value={email}
@@ -80,10 +81,12 @@ export default function Auth() {
         onChange={e => setPassword(e.target.value)}
       />
 
-      <button onClick={signIn}>Iniciar sesión</button>
-      <button onClick={signUp}>Crear cuenta</button>
+      <button type="button" onClick={signIn}>Iniciar sesión</button>
+      <button type="button" className="btn-secondary" onClick={signUp}>Crear cuenta</button>
 
-      <p>{message}</p>
-    </div>
-  )
+      {message && <p className="alert">{message}</p>}
+    </form>
+  </div>
+)
+
 }

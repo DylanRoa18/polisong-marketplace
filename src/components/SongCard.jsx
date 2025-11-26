@@ -8,26 +8,16 @@ export default function SongCard({ song, addToCart }) {
     getVinylsBySong(song.id).then(setVinyls)
   }, [song.id])
 
-  return (
-    <div className="song-card">
-      <h3>{song.title}</h3>
-      <p>{song.artist}</p>
-      <p>Precio: ${song.price}</p>
+return (
+  <div>
+    <h3>{song.title}</h3>
+    <p><strong>Artista:</strong> {song.artist}</p>
+    <p><strong>Precio:</strong> ${song.price}</p>
 
-      <button onClick={() => addToCart({ type: 'song', item: song })}>
-        Añadir MP3 al carrito
-      </button>
+    <button onClick={() => addToCart({ type: 'song', item: song })}>
+      Agregar al carrito
+    </button>
+  </div>
+)
 
-      {vinyls.length > 0 && (
-        <>
-          <h4>Vinilos que contienen esta canción:</h4>
-          {vinyls.map(v => (
-            <div key={v.id}>
-              {v.title} - ${v.price}
-            </div>
-          ))}
-        </>
-      )}
-    </div>
-  )
 }

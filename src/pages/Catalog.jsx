@@ -13,19 +13,24 @@ export default function Catalog({ addToCart }) {
     fetchVinyls().then(setVinyls)
   }, [])
 
-  return (
-    <div>
-      <h1>Catálogo</h1>
+return (
+  <div className="container">
+    <h1>Catálogo</h1>
 
-      <h2>Canciones</h2>
-      {songs.map(song => (
-        <SongCard key={song.id} song={song} addToCart={addToCart} />
-      ))}
+    <h2>Canciones</h2>
+    {songs.map(song => (
+      <div className="card" key={song.id}>
+        <SongCard song={song} addToCart={addToCart} />
+      </div>
+    ))}
 
-      <h2>Vinilos</h2>
-      {vinyls.map(v => (
-        <VinylCard key={v.id} vinyl={v} addToCart={addToCart} />
-      ))}
-    </div>
-  )
+    <h2>Vinilos</h2>
+    {vinyls.map(v => (
+      <div className="card" key={v.id}>
+        <VinylCard vinyl={v} addToCart={addToCart} />
+      </div>
+    ))}
+  </div>
+)
+
 }
