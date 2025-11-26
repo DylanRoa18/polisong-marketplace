@@ -6,21 +6,63 @@ export default function Auth() {
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
 
-  async function signUp() {
-    const { data, error } = await supabase.auth.signUp({ email, password })
-    if (error) setMessage(error.message)
-    else setMessage("Cuenta creada. Revisa tu correo.")
-  }
-
+  // -----------------------------
+  // LOGIN (Iniciar Sesión)
+  // -----------------------------
   async function signIn() {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password
     })
-    if (error) setMessage(error.message)
-    else setMessage("Sesión iniciada.")
+
+    if (error) {
+      setMessage(error.message)
+      return
+    }
+
+    setMessage("Sesión iniciada correctamente.")
   }
 
+  // -----------------------------
+  // REGISTRO (Crear Cuenta)
+  // -----------------------------
+  async function signUp() {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password
+    })
+
+    if (error) {
+      setMessage(error.message)
+      return
+    }
+
+    const user = data.user
+
+    if (!user) {
+      setMessage("Cuenta creada. Revisa tu correo.")
+      return
+    }
+
+    // Crear perfil automáticamente en la tabla profiles
+    const { error: profileError } = await supabase.from('profiles').upsert({
+      id: user.id,
+      email: user.email,
+      full_name: '',
+      is_provider: false
+    })
+
+    if (profileError) {
+      setMessage("Error creando el perfil: " + profileError.message)
+      return
+    }
+
+    setMessage("Cuenta creada y perfil registrado correctamente.")
+  }
+
+  // -----------------------------
+  // UI
+  // -----------------------------
   return (
     <div>
       <h2>Acceder</h2>
